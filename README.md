@@ -1,4 +1,5 @@
 # Mypclub
+![alttext](https://github.com/mrchocha/Mypclub/blob/master/app1/static/media/Black_logo.png =250x)
 Mypclub is a Website for programming club in ahmedabad university designed and developed during website making competition. website is devloped fully responsive and dynamic to become userfriendly.
 
 # Key-Feature
