@@ -10,16 +10,16 @@ Mypclub is a Website for programming club in ahmedabad university designed and d
 6. **Admin panal** :  admin can add notification, can see how many resources, users admins, events are ther and can add/update or delete normal user or can give aadmin rights.
 
 # Technology-Used
-1. Djngo [V 3.0](https://www.djangoproject.com/download/)
-2. Python [V 3.8](https://www.python.org/downloads/)
+1. Djngo [V3.0](https://www.djangoproject.com/download/)
+2. Python [V3.8](https://www.python.org/downloads/)
 3. javascript
-4. Bootstrap [V 4.5](https://getbootstrap.com/)
-5. PostgreSQl [V 12](https://www.postgresql.org/download/windows/)
-6. Particles.js [V 2.0](https://github.com/VincentGarreau/particles.js/)
-7. Animate On Scroll Library(AOS) [V 2.3](https://michalsnik.github.io/aos/)
-8. Chart.js [V 2.0](https://github.com/chartjs/Chart.js)
-9. CLIST-api [link](https://clist.by/problems/)
-10. Competitive_Programming_Score_API [link](https://github.com/Abhijeet-AR/Competitive_Programming_Score_API)
+4. Bootstrap [V4.5](https://getbootstrap.com/)
+5. PostgreSQl [V12](https://www.postgresql.org/download/windows/)
+6. Particles.js [V2.0](https://github.com/VincentGarreau/particles.js/)
+7. Animate On Scroll Library(AOS) [V2.3](https://michalsnik.github.io/aos/)
+8. Chart.js [V2.0](https://github.com/chartjs/Chart.js)
+9. CLIST-api [Link](https://clist.by/problems/)
+10. Competitive_Programming_Score_API [Link](https://github.com/Abhijeet-AR/Competitive_Programming_Score_API)
 
 # How To Start
 make sure that you hahe installd all above librareys and tools of given or abve version. To to download project run command
