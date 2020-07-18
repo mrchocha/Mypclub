@@ -2,12 +2,12 @@
 Mypclub is a Website for programming club in ahmedabad university designed and developed during website making competition. website is devloped fully responsive and dynamic to become userfriendly.
 
 # Key-Feature
-1. Notificatrion -> admin can add/delete notification which will be sent to all members.
-2. Events -> Event section desplays all events and is devided into three parts i.e. upcoming, live, past.
-3. Resources -> Resource section is to store all resource and one can search any resource using key words.
-4. User profile -> user is able to add/update their profiles and can see their codechef and codeforces rating graph together in one page.
-5. Contest details -> contest details section displays all upcoming contest from famouse site like codechef, codeforces, topcoder, atcode etc.
-6. Admin panal ->  admin can add notification, can see how many resources, users admins, events are ther and can add/update or delete normal user or can give aadmin rights.
+1. **Notificatrion** : admin can add/delete notification which will be sent to all members and notification bar will be updated  after every 10 secound.
+2. **Events** : Event section desplays all events and is devided into three parts i.e. upcoming, live, past.
+3. **Resources** : Resource section is to store all resource and one can search any resource using key words.
+4. **User profile** : user is able to add/update their profiles and can see their codechef and codeforces rating graph together in one page.
+5. **Contest details** : contest details section displays all upcoming contest from famouse site like codechef, codeforces, topcoder, atcode etc.
+6. **Admin panal** :  admin can add notification, can see how many resources, users admins, events are ther and can add/update or delete normal user or can give aadmin rights.
 
 # Technology-Used
 1. Djngo [V 3.0](https://www.djangoproject.com/download/)
