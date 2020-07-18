@@ -27,8 +27,8 @@ make sure that you hahe installd all above librareys and tools of given or abve 
 git clone  https://github.com/mrchocha/Mypclub.git
 cd Mypclub
 ```
-Now to run first goto `Pc/settings.py` file and change `ENGINE`,`NAME`,`USER`,`PASSWORD`,`HOST`,`PORT` as your requirnments.\ Now run command\
-for windows user
+Now to run first goto `Pc/settings.py` file and change `ENGINE`,`NAME`,`USER`,`PASSWORD`,`HOST` and `PORT` (at line no.77)  as your requirnments. Now run command\
+for windows user 
 ```
 python manage.py runserver
 ```
