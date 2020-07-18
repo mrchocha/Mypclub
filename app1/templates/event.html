@@ -1,0 +1,181 @@
+{% extends  'navbar_temp.html' %}
+{% load static %}
+
+{% block title%}
+Events | Programing Club
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.boomcdn.com/libs/owl-carousel/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.boomcdn.com/libs/owl-carousel/2.3.4/assets/owl.theme.default.min.css">
+<link rel="stylesheet" href="{% static 'css/event_style.css' %}">
+{% endblock %}
+
+{% block navbar_wrap %}
+<canvas id="canvas"></canvas>
+<div class="event_style">
+    <div class="row">
+        <div class="col-sm event_into" data-aos="zoom-out">Programming Club Events</div>
+        <div class="col-sm event_img" data-aos="zoom-out"><img src="{% static 'media/event.jpg' %}" alt="" srcset="">
+        </div>
+    </div>
+</div>
+
+<div class="circle-wrap">
+    <img src="{% static 'media/circle.png' %}" alt="">
+</div>
+<div class="upcoming_events">
+    <h1>Upcoming Events</h1>
+    <div class="owl-carousel">
+        {% for event in up_coming %}
+        <div class="owl_inner" data-aos="zoom-in-up">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ event.event_name }}</h5>
+                    <p class="card-text">{{ event.event_details |slice:":30"| safe  }}...
+                        <hr>
+                    <div>
+                        will start at: {{ event.event_start_date  }}
+                        <br>
+                        will end at: {{ event.event_end_date  }}
+                    </div>
+                    <a href="{% url 'Event_details' event_id=event.id %}">
+                        <div class="box-3">
+                            <div class="btn btn-three">
+                                <span>view</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% if not up_coming  %}
+        <div class="owl_inner" data-aos="zoom-in-up">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">all done</h5>
+                    <p class="card-text">no events is arrenged</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="current_events">
+    <h1>Current Events</h1>
+    <div class="owl-carousel">
+        {% for event in current %}
+        <div class="owl_inner" data-aos="zoom-in-up">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ event.event_name }}</h5>
+                    <p class="card-text">{{ event.event_details |slice:":30"| safe  }}...
+                        <hr>
+                    <div>
+                        started at: {{ event.event_start_date  }}
+                        <br>
+                        will end at: {{ event.event_end_date  }}
+                    </div>
+                    </p>
+                    <a href="{% url 'Event_details' event_id=event.id %}">
+                        <div class="box-3">
+                            <div class="btn btn-three">
+                                <span>view</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% if not current  %}
+        <div class="owl_inner" data-aos="zoom-in-up">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">all done</h5>
+                    <p class="card-text">no events is running</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="past_events">
+    <h1>Past Events</h1>
+    <div class="owl-carousel" data-aos="zoom-in-up">
+        {% for event in past %}
+        <div class="owl_inner">
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="card-title">{{ event.event_name }}</h5>
+                    <p class="card-text">{{ event.event_details |slice:":30"| safe  }}...
+                        <hr>
+                    <div>
+                        strted at: {{ event.event_start_date  }}
+                        <br>
+                        ended at: {{ event.event_end_date  }}
+                    </div>
+                    </p>
+                    <a href="{% url 'Event_details' event_id=event.id %}">
+                        <div class="box-3">
+                            <div class="btn btn-three">
+                                <span>view</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% if not past  %}
+        <div class="owl_inner" data-aos="zoom-in-up">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">all done</h5>
+                    <p class="card-text">no events yet!!!</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.boomcdn.com/libs/owl-carousel/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static 'js/event_firework.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            center: true,
+            stagePadding: 50,
+            loop: true,
+            margin: 10,
+            nav: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    loop: false
+                },
+                600: {
+                    items: 2,
+                    nav: true,
+                    loop: false
+                },
+                1000: {
+                    items: 3,
+                    nav: true,
+                    loop: false
+                }
+            }
+
+        })
+    });
+
+</script>
+{% endblock %}

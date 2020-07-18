@@ -1,0 +1,159 @@
+{% extends  'navbar_temp.html' %}
+{% load static %}
+
+{% block title%}
+About| Programing Club
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.boomcdn.com/libs/owl-carousel/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.boomcdn.com/libs/owl-carousel/2.3.4/assets/owl.theme.default.min.css">
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+
+
+{% block navbar_wrap %}
+
+<div class="about_home">
+    <div class="about_home_inner">
+        <div class="row">
+            <div class="col-sm about_title float-right ">Programing Club</div>
+            <div class="col-sm float-left seas_img order-1"> <img src="{% static 'media/abduni.jpeg' %}" alt=""
+                    srcset=""></div>
+        </div>
+    </div>
+</div>
+<div class="circle-wrap">
+    <img src="{% static 'media/circle.png' %}" alt="">
+</div>
+<div class="mentors">
+    <span style="font-size: 5vw; padding-left: 2vw;">Mentors</span>
+    <div class="owl-carousel">
+        {% for mentor in mentors %}
+        <div class="owl_inner" data-aos="zoom-in-up">
+            <div class="card" style="width: 18rem; padding: 10px;">
+                {% if profile_photo %}
+                <img class="card_img" src="{{ MEDIA_URL }}{{ mentor.user_profile_photo }}" alt="error" srcset="">
+                {% else %}
+                <img class="card_img" src="{% static 'media/user.png' %}"
+                    style=" border-radius: 50%; -webkit-box-shadow: none; box-shadow: none;" alt="" srcset="">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ mentor.user_first_name }} {{ mentor.user_last_name }}</h5>
+                    <p class="card-text">Post: {{ mentor.user_post  }}</p>
+                    <button type="button" class="button-view">
+                        <a href="{% url 'Profile' user_email=mentor.user_email %}">
+                            <div class="box-3">
+                                <div class="btn btn-three">
+                                    <span> view Profile </span>
+                                </div>
+                            </div>
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<hr>
+<div class="admins">
+    <span style="font-size: 5vw; padding-left: 2vw;">Admins</span>
+    <div class="owl-carousel">
+        {% for admin in admins %}
+        <div class="owl_inner" data-aos="zoom-in-up">
+            <div class="card" style="width: 18rem; padding: 10px;">
+                {% if admin.user_profile_photo  %}
+                <img class="card_img" style="border-radius: 50%;" src="{{ MEDIA_URL }}{{ admin.user_profile_photo }}" alt="error" srcset="">
+                {% else %}
+                <img class="card_img" src="{% static 'media/user.png' %}"
+                    style=" border-radius: 50%; -webkit-box-shadow: none; box-shadow: none;" alt="" srcset="">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ admin.user_first_name }} {{ admin.user_last_name }}</h5>
+                    <p class="card-text">Post: {{ admin.user_post  }}</p>
+                    <button type="submit" class="button-view">
+                        <a href="{% url 'Profile' user_email=admin.user_email %}">
+                            <div class="box-3">
+                                <div class="btn btn-three">
+                                    <span> view Profile </span>
+                                </div>
+                            </div>
+                        </a>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="connect_us">
+conctect us?
+<div>
+    <img src="{% static 'media/gmail.png'%}" alt="" srcset=""> Email: <a class="text-light " href="mailto:programming.club@ahduni.edu.in">programming.club@ahduni.edu.in</a>
+</div>
+<div>
+    <img src="{% static 'media/instagram.png'%}" alt="" srcset=""> Instagram: <a class="text-light " href="https://www.instagram.com/pclub_au/">Pclub</a>
+</div>
+<div>
+    <img src="{% static 'media/whatsapp.png'%}" alt="" srcset=""> Whatsapp: <a class="text-light " href="https://chat.whatsapp.com/Deto9DDsKh3KLVIu3JDVnZ">Pclub</a>
+</div>
+<br>
+University Address:
+<div>
+    Commerce Six Roads, Swastik Society, Navrangpura, Ahmedabad, Gujarat 380009
+</div>
+
+</div>
+<div class="bg-dark"  > 
+    <div class="text-light" style="padding-left: 2vw; padding-bottom: 3vh;">
+        Designed and Devloped by Rahul Chocha
+        <div>
+            Email: <a class="text-light" href="mailto:rahul.c@ahduni.edu.in">rahul.c@ahduni.edu.in</a>
+        </div>
+    
+    </div>  
+</div>
+
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="https://cdn.boomcdn.com/libs/owl-carousel/2.3.4/owl.carousel.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            center: true,
+            stagePadding: 50,
+            loop: true,
+            margin: 10,
+            nav: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    loop: false
+                },
+                600: {
+                    items: 2,
+                    nav: true,
+                    loop: false
+                },
+                1000: {
+                    items: 3,
+                    nav: true,
+                    loop: false
+                }
+            }
+
+        })
+    });
+
+</script>
+{% endblock %}

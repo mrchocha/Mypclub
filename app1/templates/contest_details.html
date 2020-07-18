@@ -1,0 +1,262 @@
+{% extends  'navbar_temp.html' %}
+{% load static %}
+
+
+{% block title %}
+Contest Details | Programing Club
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contest.css' %}">
+{% endblock %}
+
+{% block navbar_wrap %}
+<div class="row row-home ">
+  <div class="col-sm  col-sm-home1 ">
+    <span>AU-Ratings and Upcoming Contests</span>  
+  </div>
+  <div class="col-sm col-sm-home2 ">
+    <img src="{% static 'media/contest.jpg' %}" alt="" srcset="">
+  </div>
+</div>
+<br>
+<h2 style="padding-left: 2vw;">AU Ranks And Ratings</h2>
+<div>
+  <canvas id="myChartcc"></canvas>
+  <canvas id="myChartcf"></canvas>
+</div>
+<br>
+<h2 style="padding-left: 2vw;">Upcoming Contest</h2>
+<div class="row row-contest" style="max-width: 100vw;">
+  {% for c in response %}
+  <div class="col-sm col-sm-contest">
+    <div class="card" style="width: 18rem; height: 40vh" data-aos="zoom-in">
+      <div class="card-body">
+        <h5 class="card-title">{{ c.event }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">by {{ c.resource.name }}</h6>
+        <p class="card-text">Starts at: {{ c.start }} <br> Ends at: {{ c.end }} </p>
+        <a href="{{ c.href }}" class="card-link">link</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+  AOS.init();
+  var ccuser_data = {{ ccuser| safe }};
+  var cfuser_data = {{ cfuser| safe }};
+  var labale_cc = []
+  var data_cc = []
+  var labale_cf = []
+  var data_cf = []
+  $(document).ready(function () {
+    for (i in ccuser_data) {
+      labale_cc.push(parseInt(i) + 1);
+      data_cc.push(ccuser_data[i][0])
+    }
+    for (i in cfuser_data) {
+      labale_cf.push(parseInt(i) + 1);
+      data_cf.push(cfuser_data[i][0])
+    }
+    drawcc();
+    drawcf();
+  });
+
+  function drawcc() {
+    var ctx = document.getElementById('myChartcc').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labale_cc,
+        datasets: [{
+          label: 'Codechef',
+          data: data_cc,
+          borderColor: [
+            'rgba(89, 93, 96, 1)',
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        backgroundRules: [{
+          backgroundColor: 'rgba(89, 93, 96, 0.3)',
+          yAxisSegement: 1399
+        }, {
+          backgroundColor: 'rgba(30, 125, 34,0.3)',
+          yAxisSegement: 1599
+        }, {
+          backgroundColor: 'rgba(51, 102, 204,0.3)',
+          yAxisSegement: 1799
+        }, {
+          backgroundColor: 'rgba(104, 66, 115,0.3)',
+          yAxisSegement: 1999
+        }, {
+          backgroundColor: 'rgba(255, 191, 0,0.3)',
+          yAxisSegement: 2199
+        }, {
+          backgroundColor: 'rgba(255, 127, 0,0.3)',
+          yAxisSegement: 2499
+        }, {
+          backgroundColor: 'rgba(208, 1, 27,0.3)',
+          yAxisSegement: Infinity
+        }],
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              drawOnChartArea: false
+            },
+            ticks: {
+              // display:false,
+              beginAtZero: false,
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            title: function (tooltipItem, data) {
+              var indx = tooltipItem[0]['index'];
+              return "Rank AU: " + labale_cc[indx];
+            },
+            label: function (tooltipItem, data) {
+              var indx = tooltipItem['index'];
+              new_data = ["Name: " + ccuser_data[indx][2] + " " + ccuser_data[indx][3], "Rating: " + ccuser_data[indx][0]]
+              return new_data;
+            },
+          }
+        },
+      },
+
+      plugins: [{
+        beforeDraw: function (chart) {
+          var ctx = chart.chart.ctx;
+          var ruleIndex = 0;
+          var rules = chart.chart.options.backgroundRules;
+          var yaxis = chart.chart.scales["y-axis-0"];
+          var xaxis = chart.chart.scales["x-axis-0"];
+          var partPercentage = 1 / (yaxis.ticksAsNumbers.length - 1);
+          for (var i = yaxis.ticksAsNumbers.length - 1; i > 0; i--) {
+            if (yaxis.ticksAsNumbers[i] < rules[ruleIndex].yAxisSegement) {
+              ctx.fillStyle = rules[ruleIndex].backgroundColor;
+              ctx.fillRect(xaxis.left, yaxis.top + ((i - 1) * (yaxis.height * partPercentage)), xaxis.width, yaxis.height * partPercentage);
+            } else {
+              ruleIndex++;
+              i++;
+            }
+          }
+        }
+      }]
+    });
+  }
+
+  function drawcf() {
+    var ctx = document.getElementById('myChartcf').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labale_cf,
+        datasets: [{
+          label: 'Codeforces',
+          data: data_cf,
+          borderColor: [
+            'rgba(89, 93, 96, 1)',
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        backgroundRules: [{
+          backgroundColor: 'rgba(89, 93, 96, 0.3)',
+          yAxisSegement: 1200
+        }, {
+          backgroundColor: 'rgba(30, 125, 34,0.3)',
+          yAxisSegement: 1400
+        }, {
+          backgroundColor: 'rgba(119, 221, 187,0.3)',
+          yAxisSegement: 1600
+        }, {
+          backgroundColor: 'rgba(170, 169, 252,0.3)',
+          yAxisSegement: 1900
+        }, {
+          backgroundColor: 'rgba(236, 132, 252,0.3)',
+          yAxisSegement: 2100
+        }, {
+          backgroundColor: 'rgba(237, 194, 64,0.3)',
+          yAxisSegement: 2300
+        }, {
+          backgroundColor: 'rgba(253, 187, 85,0.3)',
+          yAxisSegement: 2400
+        }, {
+          backgroundColor: 'rgba(244, 117, 119,0.3)',
+          yAxisSegement: 2600
+        }, {
+          backgroundColor: 'rgba(243, 69, 50,0.3)',
+          yAxisSegement: 3000
+        }, {
+          backgroundColor: 'rgba(171, 45, 21,0.3)',
+          yAxisSegement: Infinity
+        }],
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              drawOnChartArea: false
+            },
+            ticks: {
+              display: false,
+              beginAtZero: false,
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            title: function (tooltipItem, data) {
+              var indx = tooltipItem[0]['index'];
+              return "Rank AU: " + labale_cf[indx];
+            },
+            label: function (tooltipItem, data) {
+              var indx = tooltipItem['index'];
+              new_data = ["Name: " + cfuser_data[indx][2] + " " + cfuser_data[indx][3], "Rating: " + cfuser_data[indx][0]]
+              return new_data;
+            },
+          }
+        },
+      },
+
+      plugins: [{
+        beforeDraw: function (chart) {
+          var ctx = chart.chart.ctx;
+          var ruleIndex = 0;
+          var rules = chart.chart.options.backgroundRules;
+          var yaxis = chart.chart.scales["y-axis-0"];
+          var xaxis = chart.chart.scales["x-axis-0"];
+          var partPercentage = 1 / (yaxis.ticksAsNumbers.length - 1);
+          for (var i = yaxis.ticksAsNumbers.length - 1; i > 0; i--) {
+            if (yaxis.ticksAsNumbers[i] < rules[ruleIndex].yAxisSegement) {
+              ctx.fillStyle = rules[ruleIndex].backgroundColor;
+              ctx.fillRect(xaxis.left, yaxis.top + ((i - 1) * (yaxis.height * partPercentage)), xaxis.width, yaxis.height * partPercentage);
+            } else {
+              ruleIndex++;
+              i++;
+            }
+          }
+        }
+      }]
+    })
+  }
+
+  console.log(x, typeof (x))
+</script>
+{% endblock %}

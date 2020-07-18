@@ -1,0 +1,107 @@
+body{
+    background-color: white;
+}
+.about_home{
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../media/SEAS.jpg');
+    background-position: center;
+    clip-path: polygon(0 0, 100% 0%, 100% 83%, 0 92%);
+}
+.about_home_inner{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color:white;
+}
+.about_home_inner>.row{
+    position: relative;
+    padding-top: 30vh;
+}
+.about_title{
+    padding-right: 0;
+    font-size: 8vw;
+    line-height: 16vh;
+    padding-left: 15vw;
+    border-right:2px solid white ;
+}
+.seas_img>img{
+    height: 40vh;
+    padding: 20px;
+    border-radius: 10%;
+}
+.mentors,.admins{
+    height: auto;
+    min-height: 70vh;
+    margin-bottom: 10vh;
+    background-color:white;
+}
+.connect_us{
+    background-color: #595d60;
+    min-height: 50vh;
+}
+.button-view{
+    padding: 0;
+    background-color: transparent;
+    margin: 0;
+    border: 0;
+}
+.connect_us{
+    padding-top: 10vh;
+    padding-left: 2vw;
+    padding-right:2vw;
+    color: white;
+    font-size: 1.3vw;
+}
+.connect_us>div>img{
+    height: 5vh;
+    padding: 5px;
+}
+.circle-wrap>img{
+    position: fixed;
+    top: -5vh;
+    left: -2vw;
+    height: 20vh;
+    width: auto;
+    z-index: 1;
+}
+.card_img{
+    height: 30vh;
+    align-self: center;
+    width: 30vh !important;
+}
+@media only screen and (max-width: 600px) {
+    body {
+      overflow-x: hidden !important;
+    }
+    .row{
+        width: 100vw;
+    }
+    .seas_img>img{
+        display: none;
+    }
+    .circle-wrap>img{
+        position: fixed;
+        top: -6vh;
+        left: -13vw;
+        height: 20vh;
+        width: auto;
+        z-index: 1;
+    }
+    .connect_us{
+        padding-top: 10vh;
+        padding-left: 2vw;
+        padding-right:2vw;
+        color: white;
+        font-size: 5vw !important;
+    }
+    .about_title{
+        padding-left: 8vw;
+        font-size: 20vw;
+        line-height: 10vh;
+    }
+    .mentors>span,.admins>span{
+        font-size: 13vw !important;
+    }
+  }
+  

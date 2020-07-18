@@ -1,0 +1,94 @@
+{% extends  'navbar_temp.html' %}
+{% load static %}
+
+{% block title%}
+Home | Programing Club
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+{% endblock %}
+
+
+
+{% block navbar_wrap %}
+<div class="home">
+    <div id="particles-js">
+    </div>
+    <div class="home_wrap ">
+        <div class="row">
+            <div class="col-3">
+                <div class="title">
+                    Programming Club
+                </div>
+            </div>
+        </div>
+
+        <img src="{% static 'media/computer_programer.png' %}" alt="" srcset="">
+    </div>
+</div>
+<div class="quote">
+    <div class="row">
+        <div class="col order-last quote_inner">
+            <span class="q">“</span>
+            <div class="quote_about" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+                Everybody in the country should learn to program a computer, because it teaches you to
+                think.
+                <br>
+                <div class="author">-Steve Jobs</div>
+            </div>
+        </div>
+        <div class="col order-first" data-aos="zoom-out">
+            <img class="sj_img" src="{% static 'media/sj.png' %}" alt="">
+        </div>
+    </div>
+</div>
+<div class="learn_wrap" style="overflow: hidden;">
+    <div class="row">
+        <div class="col-sm learn_quot">
+            <div data-aos="fade-right" hidden;"><span style="color:#52b771;">We</span> learn Here</div>
+        </div>
+        <div class="col-sm">
+            <div data-aos="zoom-in-left" style="overflow-x: hidden;">
+                <img class="learn_img" src="{% static 'media/learning.jpg' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="compete_wrap" style="overflow: hidden;">
+    <div class="row">
+        <div class="col-sm">
+            <div data-aos="zoom-in-right">
+                <img class="compete_img" src="{% static 'media/compete.jpg' %}" alt="">
+            </div>
+
+        </div>
+        <div class="col-sm compete_quot">
+            <div data-aos="fade-left"> <span style="color:#f24b58;">We</span> compete Here
+            </div>
+        </div>
+    </div>
+</div>
+<div class="win_wrap" style="overflow: hidden;">
+    <div class="row">
+        <div class="col-sm win_quot">
+            <div data-aos="fade-right">
+                <span style="color:#faa137;">We</span> win Here
+            </div>
+        </div>
+        <div class="col-sm">
+            <div data-aos="zoom-in-up">
+                <img class="win_img " src="{% static 'media/win.jpg' %}" alt="">
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script src="{% static 'js/home_particles.js' %}"></script>
+{% endblock %}

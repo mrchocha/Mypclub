@@ -1,0 +1,72 @@
+.row-contest{
+    height:40vh;
+    padding-top: 1vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+.col-sm-contest{
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 3vh;
+}
+#myChartcc,#myChartcf{
+    max-height: 90vh;
+    width: auto;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+.row{
+    width: 100vw;
+}
+.row-home{
+    background-color: white;
+    min-height: 100vh;
+    height: auto;
+    padding: 0;
+    margin-right: 0;
+    margin-left: 0;
+    max-width: 100vw;
+}
+.col-sm-home2{
+    padding-top: 20vh;
+}
+.col-sm-home2>img{
+    max-height: 80vh;
+    max-width: 50vw;
+}
+.col-sm-home1{
+    padding-top: 45vh;
+    padding-left: 2vw;
+}
+.col-sm-home1>span{
+    line-height:10vh;
+    font-size: 6vw;
+}
+@media only screen and (max-width: 600px) {
+.row-home{
+    overflow-x: hidden; 
+}
+.col-sm-home2,.col-sm-home1{
+    width: 100vw !important;
+}
+.col-sm-home1{
+    padding-top: 20vh;
+    padding-left: 8vw;
+}
+.col-sm-home1>span{
+    line-height:5vh;
+    font-size: 10vw;
+}
+.col-sm-home2>img{
+    height: 50vh !important;
+    width: auto;
+    max-width: 100vw;
+}
+.col-sm-home2{
+    padding-top: 0vh;
+}
+.col-sm-contest{
+    padding-left: 15vw;
+}
+
+}

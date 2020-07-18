@@ -1,0 +1,386 @@
+{% extends  'navbar_temp.html' %}
+{% load static %}
+
+
+{% block title %}
+Log in | Programing Club
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profie_style.css' %}">
+{% endblock %}
+
+{% block navbar_wrap %}
+
+<div class="profile_div">
+    {% if profile_photo %}
+    <img src="{{ MEDIA_URL }}{{ profile_photo }}" alt="{{ profile_photo.user_profile_photo }}" srcset="">
+    {% else %}
+    <img src="{% static 'media/user.png' %}" style=" border-radius: 50%; -webkit-box-shadow: none; box-shadow: none;"
+        alt="" srcset="">
+    {% endif %}
+    <p>First name: {{ fname }}</p>
+    <p>Last name: {{ lname }}</p>
+    <p>Birth date: {{ dob }}</p>
+    <p>Codechef id: {{ ccid }}</p>
+    <p>Codeforces id: {{ cfid }}</p>
+    <p>Post: {{ post }}</p>
+    <p>Email id: {{ email }}</p>
+    <canvas id="myChartcc"></canvas>
+    <canvas id="myChartcf"></canvas>
+    {% if is_user or  request.session.is_admin %}
+    <button type="button" class="button-update-profile">
+        <a href="#">
+            <div class="box-3">
+                <div class="btn btn-three">
+                    <span> Edit Profile </span>
+                </div>
+            </div>
+        </a>
+        {% if request.session.is_admin and not is_user %}
+    </button>
+    <button type="button" class="button-delete-profile">
+        <a href="{% url 'Remove_profile' user_email=email %}">
+            <div class="box-3">
+                <div class="btn btn-three">
+                    <span> Delete Profile </span>
+                </div>
+            </div>
+        </a>
+    </button>
+
+    {% if is_admin %}
+    <button type="button" class="button-add-as-admin">
+        <a href="{% url 'Remove_admin' user_email=email %}">
+            <div class="box-3">
+                <div class="btn btn-three">
+                    <span> Remove from admin </span>
+                </div>
+            </div>
+        </a>
+    </button>
+    {% else  %}
+    <button type="button" class="button-add-as-admin">
+        <a href="{% url 'Add_as_admin' user_email=email %}">
+            <div class="box-3">
+                <div class="btn btn-three">
+                    <span> give admin rights </span>
+                </div>
+            </div>
+        </a>
+    </button>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+
+</div>
+<div class="circle-wrap">
+    <img src="{% static 'media/circle.png' %}" alt="">
+</div>
+
+<form class="edit_form" style=" text-align: left; display: none;" action="{% url 'Profile' user_email=email %}"
+    method="POST" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="fname">First name</label>
+        <input type="text" class="form-control" id="fname" name="fname" value="{{ fname }}">
+    </div>
+    <div class="form-group">
+        <label for="lname">Last name</label>
+        <input type="text" class="form-control" id="lname" name="lname" value="{{ lname }}">
+    </div>
+    <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" class="form-control" id="dob" name="dob" value="{{ dob_formated }}">
+    </div>
+    <div class="form-group">
+        <label for="ccid">CodeChef id</label>
+        <input type="text" class="form-control" id="ccid" name="ccid" value="{{ ccid }}">
+    </div>
+    <div class="form-group">
+        <label for="cfid">CodeChef id</label>
+        <input type="text" class="form-control" id="cfid" name="cfid" value="{{ cfid }}">
+    </div>
+    {% if request.session.is_admin and not is_user %}
+    <select class="form-control" name="post">
+        <option>user</option>
+        <option>mentor</option>
+    </select>
+    {% endif %}
+    <div class="form-group">
+        <label for="profile_photo">Select profile photo</label>
+        <input type="file" class="form-control-file" id="profile_photo" name="profile_photo">
+    </div>
+    <button type="submit" class="button-update-profile">
+        <a>
+            <div class="box-3">
+                <div class="btn btn-three">
+                    <span> update </span>
+                </div>
+            </div>
+        </a>
+    </button>
+</form>
+
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    var data_cc;
+    var labale_cc = [];
+    var rating_cc = [];
+    var data_cf;
+    var labale_cf = [];
+    var rating_cf = [];
+    $(document).ready(function () {
+        $.ajax({
+            type: "get",
+            url: "https://competitive-coding-api.herokuapp.com/api/codechef/{{ ccid }}",
+            success: function (data) {
+                data_cc = data['contest_ratings'];
+                for (i in data['contest_ratings']) {
+                    year = data['contest_ratings'][i]['getyear']
+                    l = data['contest_ratings'][i]['code'];
+                    rating_cc.push(parseInt(data['contest_ratings'][i]['rating']))
+                    if (i > 0 && data['contest_ratings'][i - 1]['getyear'] != data['contest_ratings'][i]['getyear']) {
+                        labale_cc.push(data['contest_ratings'][i]['getyear']);
+                    }
+                    else if (i == 0) {
+                        labale_cc.push(data['contest_ratings'][i]['getyear']);
+                    }
+                    else { labale_cc.push("") }
+                    drawcc();
+
+                }
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+
+        $.ajax({
+            type: "get",
+            url: "https://codeforces.com/api/user.rating?handle={{ cfid }}",
+            success: function (data) {
+                console.log(data['result'])
+                for (i in data['result']) {
+                    rating_cf.push(data['result'][i]['newRating'])
+                    labale_cf.push("")
+                }
+                data_cf = data;
+                drawcf();
+                
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+        drawcc();
+        console.log("drawcc",data_cc)
+        drawcf();
+
+    })
+function drawcc(){
+    var ctx = document.getElementById('myChartcc').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labale_cc,
+            datasets: [{
+                label: 'Reatings codechef',
+                data: rating_cc,
+                borderColor: [
+                    'rgba(89, 93, 96, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            backgroundRules: [{
+                backgroundColor: 'rgba(89, 93, 96, 0.3)',
+                yAxisSegement: 1399
+            }, {
+                backgroundColor: 'rgba(30, 125, 34,0.3)',
+                yAxisSegement: 1599
+            }, {
+                backgroundColor: 'rgba(51, 102, 204,0.3)',
+                yAxisSegement: 1799
+            }, {
+                backgroundColor: 'rgba(104, 66, 115,0.3)',
+                yAxisSegement: 1999
+            }, {
+                backgroundColor: 'rgba(255, 191, 0,0.3)',
+                yAxisSegement: 2199
+            }, {
+                backgroundColor: 'rgba(255, 127, 0,0.3)',
+                yAxisSegement: 2499
+            }, {
+                backgroundColor: 'rgba(208, 1, 27,0.3)',
+                yAxisSegement: Infinity
+            }],
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false,
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        // display:false,
+                        beginAtZero: false,
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    title: function (tooltipItem, data) {
+                        var indx = tooltipItem[0]['index'];
+                        return data_cc[indx]['code'];
+                    },
+                    label: function (tooltipItem, data) {
+                        var indx = tooltipItem['index'];
+                        new_data = ["Year: " + data_cc[indx]['getyear'], "Rating: " + data_cc[indx]['rating'], "Rank: " + data_cc[indx]['rank'], "Challange name: " + data_cc[indx]['name']]
+                        return new_data;
+                    },
+                }
+            },
+        },
+
+        plugins: [{
+            beforeDraw: function (chart) {
+                var ctx = chart.chart.ctx;
+                var ruleIndex = 0;
+                var rules = chart.chart.options.backgroundRules;
+                var yaxis = chart.chart.scales["y-axis-0"];
+                var xaxis = chart.chart.scales["x-axis-0"];
+                var partPercentage = 1 / (yaxis.ticksAsNumbers.length - 1);
+                for (var i = yaxis.ticksAsNumbers.length - 1; i > 0; i--) {
+                    if (yaxis.ticksAsNumbers[i] < rules[ruleIndex].yAxisSegement) {
+                        ctx.fillStyle = rules[ruleIndex].backgroundColor;
+                        ctx.fillRect(xaxis.left, yaxis.top + ((i - 1) * (yaxis.height * partPercentage)), xaxis.width, yaxis.height * partPercentage);
+                    } else {
+                        ruleIndex++;
+                        i++;
+                    }
+                }
+            }
+        }]
+    });
+}
+
+function drawcf(){
+    var ctx = document.getElementById('myChartcf').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labale_cf,
+            datasets: [{
+                label: 'Reatings codeforces',
+                data: rating_cf,
+                borderColor: [
+                    'rgba(89, 93, 96, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            backgroundRules: [{
+                backgroundColor: 'rgba(89, 93, 96, 0.3)',
+                yAxisSegement: 1200
+            }, {
+                backgroundColor: 'rgba(30, 125, 34,0.3)',
+                yAxisSegement: 1400
+            }, {
+                backgroundColor: 'rgba(119, 221, 187,0.3)',
+                yAxisSegement: 1600
+            }, {
+                backgroundColor: 'rgba(170, 169, 252,0.3)',
+                yAxisSegement: 1900
+            }, {
+                backgroundColor: 'rgba(236, 132, 252,0.3)',
+                yAxisSegement: 2100
+            }, {
+                backgroundColor: 'rgba(237, 194, 64,0.3)',
+                yAxisSegement: 2300
+            }, {
+                backgroundColor: 'rgba(253, 187, 85,0.3)',
+                yAxisSegement: 2400
+            }, {
+                backgroundColor: 'rgba(244, 117, 119,0.3)',
+                yAxisSegement: 2600
+            }, {
+                backgroundColor: 'rgba(243, 69, 50,0.3)',
+                yAxisSegement: 3000
+            }, {
+                backgroundColor: 'rgba(171, 45, 21,0.3)',
+                yAxisSegement: Infinity
+            }],
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false,
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        display: false,
+                        beginAtZero: false,
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    title: function (tooltipItem, data) {
+                        var indx = tooltipItem[0]['index'];
+                        console.log(indx)
+                        return data_cf['result'][indx]['contestName'];
+                    },
+                    label: function (tooltipItem, data) {
+                        var indx = tooltipItem['index'];
+                        new_data = ["Contest id: " + data_cf['result'][indx]['contestId'], "New Rating: " + data_cf['result'][indx]['newRating'], "Old Rating: " + data_cf['result'][indx]['oldRating'], "Rank: " + data_cf['result'][indx]['rank']]
+                        return new_data;
+                    },
+                }
+            },
+        },
+
+        plugins: [{
+            beforeDraw: function (chart) {
+                var ctx = chart.chart.ctx;
+                var ruleIndex = 0;
+                var rules = chart.chart.options.backgroundRules;
+                var yaxis = chart.chart.scales["y-axis-0"];
+                var xaxis = chart.chart.scales["x-axis-0"];
+                var partPercentage = 1 / (yaxis.ticksAsNumbers.length - 1);
+                for (var i = yaxis.ticksAsNumbers.length - 1; i > 0; i--) {
+                    if (yaxis.ticksAsNumbers[i] < rules[ruleIndex].yAxisSegement) {
+                        ctx.fillStyle = rules[ruleIndex].backgroundColor;
+                        ctx.fillRect(xaxis.left, yaxis.top + ((i - 1) * (yaxis.height * partPercentage)), xaxis.width, yaxis.height * partPercentage);
+                    } else {
+                        ruleIndex++;
+                        i++;
+                    }
+                }
+            }
+        }]
+    })
+}
+    
+
+    $(".button-update-profile").on("click", function () {
+        $(".profile_div").css("display", "none");
+        $(".edit_form").css("display", "block");
+    })
+
+</script>
+{% endblock %}
