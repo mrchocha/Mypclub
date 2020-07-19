@@ -271,6 +271,8 @@ def contest_details(request):
                 #print(x['result']['rank'])
                 cf_data.append([x['result'][0]['rating'], u.user_email, u.user_first_name, u.user_last_name])
     print(cc_data ,cf_data)
+    cc_data.sort(reverse=True)
+    cf_data.sort(reverse=True)
     response=requests.get("https://clist.by/api/v1/json/contest/?username=mr_chocha&api_key=9f8aeb6f5f831c44c295c509303000e8e7628f94&start__gte="+curr_time)
     data= json.loads(response.text)
     context={
