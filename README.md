@@ -14,7 +14,7 @@ Mypclub is a Website for programming club in ahmedabad university designed and d
 6. **Admin panal** :  admin can add notification, can see how many resources, users admins, events are ther and can add/update or delete normal user or can give aadmin rights.
 
 # Technology-Used
-1. Djngo [V3.0](https://www.djangoproject.com/download/)
+1. Django [V3.0](https://www.djangoproject.com/download/)
 2. Python [V3.8](https://www.python.org/downloads/)
 3. javascript
 4. Bootstrap [V4.5](https://getbootstrap.com/)
