@@ -41,5 +41,7 @@ for linux user
 python3 manage.py runserver
 ```
 
+# Screenshots
+please go [here](https://github.com/mrchocha/Mypclub/tree/master/ss)
 
 Happy Coding !!!
